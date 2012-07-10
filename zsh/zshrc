@@ -1,0 +1,187 @@
+# vim ts=8 noet
+
+autoload -Uz colors && colors
+local d=%{$fg[default]%}
+local k=%{$fg[black]%}
+local g=%{$fg[green]%}
+local b=%{$fg[blue]%}
+local c=%{$fg[cyan]%}
+local r=%{$fg[red]%}
+local y=%{$fg[yellow]%}
+local m=%{$fg[magenta]%}
+local w=%{$fg[white]%}
+local D=%{$bg[default]%}
+local K=%{$bg[black]%}
+local G=%{$bg[green]%}
+local B=%{$bg[blue]%}
+local C=%{$bg[cyan]%}
+local R=%{$bg[red]%}
+local Y=%{$bg[yellow]%}
+local M=%{$bg[magenta]%}
+local W=%{$bg[white]%}
+local rc=%{$reset_color%}
+
+#autoload -Uz promptinit && promptinit
+#
+autoload insert-unicode-char
+zle -N insert-unicode-char
+bindkey '^Xu' insert-unicode-char
+
+### プラグイン
+source $HOME/dotfiles/zsh/plugins/incr-0.2.zsh
+source $HOME/dotfiles/zsh/zaw/zaw.zsh
+source $HOME/dotfiles/zsh/zaw-sources/tmux-windows.zsh
+
+### ディレクトリ操作
+source $HOME/dotfiles/zsh/etc/zshrc.dir
+
+### ヒストリ操作
+source $HOME/dotfiles/zsh/etc/zshrc.hist
+
+zsh-history() {
+    zaw zaw-src-history
+}
+zle -N zsh-history
+bindkey '^Xj' zsh-history
+
+### エイリアス
+source $HOME/dotfiles/zsh/etc/zshrc.alias
+
+### キーバインド
+source $HOME/dotfiles/zsh/etc/zshrc.key
+
+### プロンプト
+local smiley="%(?,%{$fg[green]%}☺%{$reset_color%},%{$fg[red]%}☹%{$reset_color%})"
+PROMPT="%n@%m%(!,$r,$g) %~
+${smiley} "
+RPROMPT="%D %T"
+PROMPT2="%_%% "                     # 複数行入力時
+SPROMPT="%r is correct?[n,y]:%"    # 入力ミス時
+
+function zle-line-init zle-keymap-select {
+    RPS1="${RPS1% [IN]}${${KEYMAP/vicmd/ N}/(main|viins)/ I}"
+    RPS2=$RPS1
+    zle reset-prompt
+}
+zle -N zle-line-init
+zle -N zle-keymap-select
+
+setopt PROMPT_SUBST		# PROMPTの変数展開、コマンド置換、算術展開する
+setopt PROMPT_BANG		# PROMPT内の!を次のヒストリ番号へ展開
+setopt PROMPT_PERCENT		# PROMPT内の%を展開
+setopt PROMPT_CR		# プロンプト文字列生成時にCRを出力する
+setopt PROMPT_SP		# PROMPT_CRがオンの時にコマンド出力が途切れる問題を解決する
+setopt TRANSIENT_RPROMPT	# コマンド実行時に右プロンプトを消去
+
+autoload -Uz compinit && compinit
+
+setopt ALWAYS_LAST_PROMPT		# 候補一覧表示時に新しいプロンプトを呼び出さない
+setopt COMPLETE_IN_WORD			# 補完動作の変更
+setopt AUTO_LIST			# 候補が複数のとき自動で一覧表示
+unsetopt BASH_AUTO_LIST			# 同じ単語に対して２度続けて補完キーを押した時一覧表示
+unsetopt AUTO_MENU			# 候補が複数のとき補完キーの連打でメニュー補完へ
+unsetopt MENU_COMPLETE			# 候補が複数の時直ちにメニュー補完へ
+setopt AUTO_PARAM_KEYS			# 変数名の補完で不要な文字を自動削除
+setopt AUTO_PARAM_SLASH			# ディレクトリ名には自動で/を付ける
+setopt AUTO_REMOVE_SLASH		# ディレクトリ名を補完した時につく/を自動削除
+#setopt COMPLETE_ALIASES		# 補完でAliasを内部的に置き換えないようにする
+setopt GLOB_COMPLETE			# グロッビングパターンを含む補完で展開結果を挿入しない
+setopt HASH_LIST_ALL			# コマンド補完時にコマンドハッシュを確認
+setopt LIST_AMBIGUOUS			# 候補一覧を出すのは補完キーを押す前後で単語が変わらない時
+unsetopt LIST_BEEP			# 補完結果が１つに確定しない場合に音
+setopt LIST_PACKED			# 一覧の行数をなるべく少なく
+setopt LIST_ROWS_FIRST			# 候補一覧を横進み
+setopt LIST_TYPES			# 候補一覧のファイル末尾に種別を付ける
+setopt REC_EXACT			# 現在の単語に完全一致するものがある場合そこで確定
+
+zstyle -d
+## Completion caching
+#zstyle ':completion::complete:*' use-cache on
+#zstyle ':completion::complete:*' cache-path .zcache
+
+##Completion Options
+#zstyle ':completion:*' verbose yes
+#zstyle ':completion:*' special-dirs true
+#zstyle ':completion:*:match:*' original only
+#zstyle ':completion::prefix-1:*' completer _complete
+#zstyle ':completion:predict:*' completer _complete
+#zstyle ':completion:incremental:*' completer _complete _correct
+#zstyle ':completion:*' completer _complete _prefix _correct _prefix _match _approximate
+#zstyle ':completion:*:*:*:default' menu yes select
+#zstyle ':completion:*:*:default' force-list always
+#zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+#zstyle ':completion:*' list-colors ''
+#zstyle ':completion:*' group-name ''
+#zstyle ':completion:*:descriptions' format "${K}%S%d:%s${rc}"
+#zstyle ':completion:*:processes' menu yes select=2
+
+## Path Expansion
+#zstyle ':completion:*' expand 'yes'
+#zstyle ':completion:*' squeeze-shlashes 'yes'
+#zstyle ':completion::complete:*' '\\'
+
+##zstyle ':completion:*:*:コマンド:*:タグ' スタイル 
+## Completion caching
+#zstyle ':completion::complete:*' use-cache on
+#zstyle ':completion::complete:*' cache-path .zcache
+#zstyle ':completion:*:cd:*' ignore-parents parent pwd
+#
+##Completion Options
+#zstyle ':completion:*:match:*' original only
+#zstyle ':completion::prefix-1:*' completer _complete
+#zstyle ':completion:predict:*' completer _complete
+#zstyle ':completion:incremental:*' completer _complete _correct
+#zstyle ':completion:*' completer _complete _prefix _correct _prefix _match _approximate
+#
+## Path Expansion
+#zstyle ':completion:*' expand 'yes'
+#zstyle ':completion:*' squeeze-shlashes 'yes'
+#zstyle ':completion::complete:*' '\\'
+#
+#zstyle ':completion:*:*:*:default' menu yes select
+#zstyle ':completion:*:*:default' force-list always
+#
+#autoload -Uz add-zsh-hook
+#autoload -Uz vcs_info
+#zstyle ':vcs_info:*' enable git svn hg bzr
+#zstyle ':vcs_info:*' formats '(%s)-[%b]'
+#zstyle ':vcs_info:*' actionformats '(%s)-[%b|%a]'
+#
+#autoload -Uz is-at-least
+#if is-at-least 4.3.10; then
+#    zstyle ':vcs_info:git:*' check-for-changes true
+#    zstyle ':vcs_info:git:*' stagedstr "+"    # 適当な文字列に変更する
+#    zstyle ':vcs_info:git:*' unstagedstr "-"  # 適当の文字列に変更する
+#    zstyle ':vcs_info:git:*' formats '(%s)-[%b] %c%u'
+#    zstyle ':vcs_info:git:*' actionformats '(%s)-[%b|%a] %c%u'
+#fi
+#
+#precmd() {
+#    psvar=()
+#    LANG=en_US.UTF-8 vcs_info
+#    [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
+#}
+#
+## prompt
+#PROMPT="$GREEN%n@`hostname` $YELLOW%~$BLACK $HOSTNAME $GREEN
+#%(!,$RED,$BLUE)%# $DEFAULT"               # 左表示
+#RPROMPT="%1(v|%F{green}%1v%f|)" # 右表示
+#PROMPT2="%_%%"                     # 複数行入力時
+#SPROMPT="%r is correct?[n,y]:%"    # 入力ミス時
+#zshrc() {
+#    vi ~/.zshrc
+#}
+#
+##example
+#zei() {
+#    fc -pa /tmp/${USER}.zei 100 100
+#    local price; typeset -i sum=0 zprice
+#    while vared -cehp "価格> " price; do
+#        print -s -- $price
+#        zprice=$((price*1.05))
+#        echo "税込価格: " $zprice
+#        sum=$((sum+zprice))
+#        price=""
+#    done
+#    echo "総額: " $sum
+#}

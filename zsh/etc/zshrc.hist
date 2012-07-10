@@ -1,0 +1,28 @@
+# vim ts=8 noet
+
+### ヒストリ操作
+# イベント呼び出し文字、ヒストリ置換文字、コメント開始文字
+#histchars=!^#
+# ヒストリ保存ファイル
+#HISTFILE=
+# ヒストリ最大記憶数
+HISTSIZE=10000000
+# ヒストリファイル最大記憶数
+SAVEHIST=100000000
+# シェルオプション
+setopt APPEND_HISTORY		# ヒストリファイルを追記する
+#setopt EXTENDED_HISTORY	# 拡張フォーマットを使用
+#setopt HIST_ALLOW_CLOBBER	# リダイレクトを上書きに書き換える
+#setopt HIST_BEEP		# 存在しないとき警告音
+#setopt HIST_EXPIRE_DUPS_FIRST	# ヒストリ数上限に達した時に重複を優先して削除
+#setopt HIST_FIND_NO_DUPS	# ヒストリ検索で重複を無視して最初の１件のみ有効
+setopt HIST_IGNORE_ALL_DUPS	# ヒストリの重複をさせない
+setopt HIST_IGNORE_DUPS	# 直前と同一のコマンドラインの場合は保存しない
+setopt HIST_IGNORE_SPACE	# 先頭にスペースを入れた場合保存しない
+setopt HIST_NO_FUNCTIONS	# 関数定義のためのコマンドラインは保存しない
+setopt HIST_NO_STORE		# fc,historyなどの履歴参照コマンドは保存しない
+setopt HIST_REDUCE_BLANKS	# 余分なスペースは削除する
+setopt HIST_SAVE_NO_DUPS	# ヒストリファイルに保存するときに重複を削除
+setopt HIST_VERIFY		# ヒストリ展開をしようとしたときに即実行しない
+#setopt INC_APPEND_HISTORY	# ヒストリファイルに同時に書き込む
+#setopt SHARE_HISTORY		# 稼働中のすべてのzshで履歴を共有する

@@ -1,0 +1,20 @@
+# vim ts=8 noet
+
+alias zshrc='vi ~/.zshrc'
+alias reload='source ~/.zshrc'
+
+case "$OSTYPE" in
+  freebsd*|darwin*)
+    alias ls='ls -AG'
+    alias ll='ls -lAG'
+    ;;
+  linux*)
+    alias ls='ls -A --color=auto'
+    alias ll='ls -l'
+    ;;
+  esac
+alias ping='ping -c 4'
+
+alias g8='JAVA_HOME=/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home; g8'
+
+alias zawl='zsh ~/.zsh/zaw/zaw-launcher.zsh'

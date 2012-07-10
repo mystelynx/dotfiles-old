@@ -1,0 +1,16 @@
+#openjdk
+#export JAVA_HOME=/Library/Java/JavaVirtualMachines/1.7.0.jdk/Contents/Home
+
+#oracle
+case "$OSTYPE" in
+  freebsd*|darwin*)
+    export JAVA_HOME="/Library/Java/JavaVirtualMachines/1.7.0.jdk/Contents/Home"
+    ;;
+  linux*)
+    export JAVA_HOME="/usr/java/default"
+    ;;
+esac
+#zdotdir
+export ZDOTDIR=~/
+
+fpath+=$HOME/dotfiles/zsh/zaw

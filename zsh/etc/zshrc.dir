@@ -1,0 +1,31 @@
+# vim ts=8 noet
+
+### ディレクトリ操作
+# 移動先検索パス
+cdpath=(~)
+# ディレクトリスタックの記憶数
+DIRSTACKSIZE=1024
+# ディレクトリ移動時に自動実行
+chpwd_functions=(_chpwd_ls)
+# シェルオプション
+#setopt CHASE_DOTS			#cd先に".."が含まれる時、シンボリックリンクを無視する
+#setopt CHASE_LINKS			#cdで全てのシンボリックリンクを無視する
+setopt AUTO_CD				#ディレクトリ名だけでcd
+setopt AUTO_PUSHD			#移動時に常にpushd
+#setopt CDABLE_VARS			#cd先が見つからない時、名前付きディレクトリへ移動しようとする
+setopt PUSHD_IGNORE_DUPS		#ディレクトリスタックにあるものは追加しない
+#setopt PUSHD_MINUS			#+/-の意味を反転
+setopt PUSHD_SILENT			#pushd,popd時にスタックの内容を表示しない
+setopt PUSHD_TO_HOME			#引数なしでpushdした時にホームへ戻る
+
+functions _chpwd_ls() {
+  case "$OSTYPE" in
+    bsd*|darwin*)
+      ls -AG
+      ;;
+    linux*)
+      ls -A --color=auto
+      ;;
+  esac
+}
+
