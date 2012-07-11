@@ -2,7 +2,7 @@
 
 DOT_DIR=$HOME/dotfiles
 
-files=`find $DOT_DIR -mindepth 2 -maxdepth 2 -type f`
+files=`find $DOT_DIR -maxdepth 2 -mindepth 2 -path '*/.git*' -prune -o -type f -print`
 for file in $files
 do
   dotfile=$HOME/.`basename $file`;
