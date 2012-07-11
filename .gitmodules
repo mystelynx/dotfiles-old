@@ -7,3 +7,6 @@
 [submodule "zsh/zaw"]
 	path = zsh/zaw
 	url = git://github.com/zsh-users/zaw.git
+[submodule "tmux/fonts/vim-powerline"]
+	path = tmux/fonts/vim-powerline
+	url = git@github.com:Lokaltog/vim-powerline.git
