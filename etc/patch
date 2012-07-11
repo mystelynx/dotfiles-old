@@ -1,0 +1,1 @@
+patch --dry-run -p1 -d tmux/tmux-powerline <tmux-powerline.diff
