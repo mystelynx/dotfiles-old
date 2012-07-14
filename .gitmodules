@@ -12,3 +12,6 @@
 [submodule "tmux/fonts/vim-powerline"]
 	path = tmux/fonts/vim-powerline
 	url = git@github.com:Lokaltog/vim-powerline.git
+[submodule "zsh/git-flow-completion"]
+	path = zsh/git-flow-completion
+	url = git@github.com:bobthecow/git-flow-completion.git
