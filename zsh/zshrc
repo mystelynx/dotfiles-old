@@ -31,6 +31,7 @@ bindkey '^Xu' insert-unicode-char
 source $HOME/dotfiles/zsh/plugins/incr-0.2.zsh
 source $HOME/dotfiles/zsh/zaw/zaw.zsh
 source $HOME/dotfiles/zsh/zaw-sources/tmux-windows.zsh
+source $HOME/dotfiles/zsh/git-flow-completion/git-flow-completion.zsh
 
 ### ディレクトリ操作
 source $HOME/dotfiles/zsh/etc/zshrc.dir
